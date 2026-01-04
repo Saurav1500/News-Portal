@@ -9,12 +9,16 @@ class Article extends Model
     //
     protected $fillable=['user_id','source_id','title','slug','hero_image_path','contenct','summary','ai_categories','ai_tags','is_published','published_at','views'];
     
-    protected $cast=[
+ 
+       protected function casts(): array
+    {
+        return [
         'ai_categories'=>'array',
         'ai_tags'=>'array',
         'is_published'=>'boolean',
         'published_at'=>'datetime',
-    ];
+        ];
+    }
 
 
     //Relationships
