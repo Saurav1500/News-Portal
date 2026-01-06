@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\{ArticleController as AdminArticel, CategoryController as AdminCategory, TagController as AdminTag , SourceController as AdminSource};
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,4 +18,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth','role:admin,editor,author'])->prefix('admin')->name('admin.')->group(function(){
+    Route::resource('articles',AdminArticel::class);
+    Route::resource('categories',AdminCategory::class)->middleware('role:admin,editor');
+    Route::resource('tags',AdminTag::class)->middleware('role:admin,editor');
+    Route::resource('sources',AdminSource::class)->middleware('role:admin');
+});
+
+
+
 require __DIR__.'/auth.php';
+
